@@ -1,0 +1,49 @@
+@layer lf-home, lf-home-page, lf-phase2, lf-community, lf-competition, lf-sports, lf-polish, lf-navigation, lf-refinement, lf-workspaces, lf-theme;
+@layer lf-theme {
+/* Semantic dark tokens. Existing light values remain the fallbacks, preserving the approved homepage. */
+:root { color-scheme:light; --dialog-scrim:#0c161ab3; --ink:#202824; --paper:#f7f6f1; --green:#b8d99b; --muted:#58635c; --line:#dce1d8; --surface:#fffefa; --radius:20px; --shadow:0 12px 40px #17291c09; --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; }
+.theme-control { padding:var(--space-3); }
+.theme-control label { display:block; font-size:14px; font-weight:600; margin-bottom:var(--space-2); }
+html[data-theme=dark] {
+  color-scheme:dark;
+  --ink:#edf1e9; --paper:#141c17; --muted:#b8c6b8; --line:#405344; --surface:#1d2921; --green:#b8d99b;
+  --theme-surface:#1d2921; --theme-surface-soft:#28382b; --theme-surface-deep:#17251d;
+  --theme-surface-translucent:#18231bf5; --theme-text:#e6eddf; --theme-muted:#bdcdb7;
+  --theme-line:#4e6350; --theme-focus:#c0e09f; --theme-danger:#ffb5a4;
+  --theme-danger-surface:#482a27; --theme-warning:#f0d89d; --theme-warning-surface:#443c25;
+}
+.theme-toggle { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px; min-height:44px; width:100%; border-radius:9px; background:var(--paper); color:var(--ink); }
+html[data-theme=dark] body { background:#141c17; color:var(--ink); }
+html[data-theme=dark] body :is(input,select,textarea) { background:var(--surface); color:var(--ink); border-color:var(--theme-line); }
+html[data-theme=dark] body :is(input,textarea)::placeholder { color:#a8b5a5; opacity:1; }
+html[data-theme=dark] body .button { background:#b8d99b; color:#18271a; }
+html[data-theme=dark] body .button:hover { background:#cde8b5; }
+html[data-theme=dark] body .button-outline { background:transparent; border-color:#78956d; color:#e6eddf; }
+html[data-theme=dark] body :is(.sport-filters button,.period-filters button,.compact-action) { color:#d8e8ca; }
+html[data-theme=dark] body :is(.sport-filters button[aria-pressed=true],.sport-filters button[aria-selected=true],.period-filters button[aria-pressed=true],.slot.selected,.date-tile.selected) { background:#b8d99b; border-color:#c2dfa7; color:#18271a; }
+html[data-theme=dark] body .slot.selected span { color:#293c22; }
+html[data-theme=dark] body :is(.choice.selected,.sport-choice[aria-pressed=true],.team-option[aria-pressed=true]) { background:#31472f; border-color:#b8d99b; color:#f1f5e9; }
+html[data-theme=dark] body :is(button:disabled,input:disabled,select:disabled,.slot.unavailable) { background:#28302a; color:#abb6a6; border-color:#53604d; opacity:1; cursor:not-allowed; }
+html[data-theme=dark] body :is(a,button,input,select,textarea,summary):focus-visible { outline-color:var(--theme-focus); }
+html[data-theme=dark] body :is(.field-error,.community-notice.error) { color:var(--theme-danger); }
+html[data-theme=dark] body .form-error-summary { background:var(--theme-danger-surface); color:var(--theme-danger); }
+html[data-theme=dark] body :is(.collectible-face,.card-back,.access-art,.football-broadcast,.cricket-broadcast,.head-to-head-hero,.booking,.hero,.summary-panel,.podium-place-1) { color:#f0f4e8; }
+html[data-theme=dark] body .card-portrait > span { background:#b8d99b; color:#18271a; }
+html[data-theme=dark] body .team-logo.monogram { background:#344a32; color:#e3edcb; }
+html[data-theme=dark] body :is(.collectible-face,.access-art,.football-broadcast,.cricket-broadcast,.head-to-head-hero,.podium-place-1) :is(p,small) { color:#cedcc2; }
+html[data-theme=dark] body .sports-table thead { background:#30452f; color:#f0f4e8; }
+html[data-theme=dark] body .sports-table :is(.metric-value,.points-cell) { color:#d0edb2; background:#273c27; }
+html[data-theme=dark] body .navigation .account-link { background:#b8d99b; color:#18271a; }
+html[data-theme=dark] body .hero-secondary { color:#fff; }
+html[data-theme=dark] body .hero .button { color:#18271a; }
+
+html[data-theme=dark] body :is(.date-tile.selected,.slot.selected) :is(span,strong) {color:#18271a}
+html[data-theme=dark] body :is(.conversation-list > button[aria-pressed=true],.conversation-list > button:hover,.message-bubble.own-message) {background:#30462e;border-color:#9aba83}
+html[data-theme=dark] body :is(.compact-action:hover,.sport-filters button:hover,.workspace-nav a:hover) {background:#354d33;color:#eef5e6}
+html[data-theme=dark] body .workspace-nav a[aria-current=page] {background:#b8d99b;color:#18271a}
+html[data-theme=dark] body :is(.challenge-status.pending,.membership-status.pending,.booking-status) {background:var(--theme-warning-surface);color:var(--theme-warning)}
+html[data-theme=dark] body :is(.challenge-status.accepted,.membership-status.accepted) {background:#2b4329;color:#ceeab4}
+html[data-theme=dark] body :is(.challenge-status.rejected,.membership-status.rejected) {background:var(--theme-danger-surface);color:var(--theme-danger)}
+html[data-theme=dark] body .team-b {background:#b1ce93}
+html[data-theme=dark] body .draws {background:#dfca8f}
+}

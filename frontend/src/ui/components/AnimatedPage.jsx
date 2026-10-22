@@ -17,7 +17,7 @@ export default function AnimatedPage({ children, pageKey }) {
   useEffect(() => {
     if (!window.IntersectionObserver || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     let observer;
-    const elements = [...root.current.querySelectorAll('h2, .about-copy, .facility, .section-heading > p, .form-section, .summary-panel, .auth-panel, .registration-aside, .page-heading, .booking-inner, .hero-image, .player-tile, .team-tile, .community-section, .management-column')];
+    const elements = [...root.current.querySelectorAll('h2, .about-copy, .facility, .section-heading > p, .form-section, .summary-panel, .page-heading, .booking-inner, .hero-image, .player-tile, .team-tile, .community-section, .management-column, .challenge-card, .rivalry-card, .head-to-head-hero, .match-card, .podium-player, .sports-section, .account-section, .workspace-card, .flow-panel, .recognition')];
     try {
       observer = new IntersectionObserver(entries => entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -27,7 +27,7 @@ export default function AnimatedPage({ children, pageKey }) {
       }), { threshold: 0.08 });
       elements.forEach((element, index) => {
         // Keep every element visible until its observer callback starts a finite animation.
-        element.style.setProperty('--reveal-delay', `${element.matches('.facility, .player-tile, .team-tile') ? index % 3 * 75 : 0}ms`);
+        element.style.setProperty('--reveal-delay', `${element.matches('.facility, .player-tile, .team-tile, .challenge-card, .rivalry-card, .workspace-card') ? index % 3 * 75 : 0}ms`);
         observer.observe(element);
       });
     } catch {

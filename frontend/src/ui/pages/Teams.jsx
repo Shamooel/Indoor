@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PageHeader from '../components/PageHeader';
 import DemoCommunityBar from '../components/DemoCommunityBar';
 import { TeamLogo } from '../components/CommunityElements';
-import { useCommunity } from '../state/CommunityContext';
+import { useCommunity } from '../state/CommunityStore';
 import '../styles/community.css';
 
 export default function Teams() {

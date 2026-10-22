@@ -1,0 +1,2 @@
+import React from 'react';
+export default function Recognition() { return <aside className="recognition"><div><p className="eyebrow">MONTHLY SPOTLIGHT / DEMO CONCEPT</p><h2>A month to remember.</h2><p>Monthly views highlight leading players and teams while all-time records preserve the full story.</p><p className="helper">Future recognition and rewards will depend on published eligibility rules. No real prizes or rewards are offered in this demo.</p></div><a className="text-link" href="/leaderboards?period=month">Explore this month’s players ↗</a></aside>; }

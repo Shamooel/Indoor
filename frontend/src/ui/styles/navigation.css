@@ -1,11 +1,23 @@
+@layer lf-navigation {
 /* Shared navigation loads on every page, before any community route is opened. */
-@media (max-width: 1180px) {
-  .site-header .menu-toggle { display: flex; flex-direction: column; gap: 5px; background: transparent; padding: 10px; }
+.community-nav { position: relative; }
+.community-nav-trigger { display: flex; align-items: center; gap: 8px; padding: 10px 0; background: transparent; color: inherit; font-size: inherit; border-bottom: 1px solid transparent; }
+.community-nav-trigger:hover, .community-nav-trigger.is-current { color: var(--theme-muted, #527436); border-bottom-color: var(--theme-line, #78965d); }
+.community-nav-trigger > span { transition: transform .2s; }
+.community-nav-trigger[aria-expanded="true"] > span { transform: rotate(180deg); }
+.community-nav-panel { position: absolute; top: calc(100% + 12px); left: -20px; min-width: 220px; max-height: calc(100dvh - 130px); overflow-y: auto; background: var(--paper); border: 1px solid var(--theme-line, #d8dfce); box-shadow: 0 12px 26px #18240c18; padding: 10px; min-width:44px; min-height:44px; }
+.community-nav-panel a { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 12px; font-size: 16px; }
+.community-nav-panel a:hover, .community-nav-panel a[aria-current="page"] { background: var(--theme-surface, #e8efdf); color: var(--theme-muted, #3e5c2c); }
+@media (max-width: 1280px) {
+  .site-header .menu-toggle { display: flex; flex-direction: column; gap: 5px; background: transparent; padding: 10px; min-width:44px; min-height:44px; }
   .site-header .menu-toggle span { width: 23px; height: 1.5px; background: var(--ink); }
   .site-header .navigation { display: none; position: absolute; top: 96px; left: 0; right: 0; padding: 20px 32px; background: var(--paper); border-top: 1px solid var(--line); box-shadow: 0 15px 25px #0002; max-height: calc(100dvh - 96px); overflow-y: auto; }
   .site-header .navigation.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
-  .site-header .navigation > a:not(.button) { padding: 10px; }
+  .site-header .navigation > a:not(.button) { padding: 10px; min-width:44px; min-height:44px; }
+  .community-nav-trigger { width: 100%; padding: 10px; justify-content: space-between; }
+  .community-nav-panel { position: static; min-width: 0; width: 100%; max-height: none; overflow: visible; border: 0; box-shadow: none; border-left: 1px solid var(--theme-line, #bfceaf); margin: 6px 0; background: var(--theme-surface, #edf0e6); padding: 4px 10px; }
 }
 @media (max-width: 700px) {
   .site-header .navigation { top: 80px; padding-inline: 20px; max-height: calc(100dvh - 80px); }
+}
 }

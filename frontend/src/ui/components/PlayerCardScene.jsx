@@ -14,8 +14,12 @@ function makeTexture(player, sport, teamName, photo, back = false) {
   canvas.width = 560; canvas.height = 820;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Card texture unavailable');
-  ctx.fillStyle = '#24382c'; ctx.fillRect(0, 0, 560, 820);
-  ctx.strokeStyle = '#98ad80'; ctx.lineWidth = 2; ctx.strokeRect(28, 34, 504, 730);
+  const lighting = ctx.createLinearGradient(0, 0, 560, 820);
+  lighting.addColorStop(0, '#3a5641'); lighting.addColorStop(.6, '#1c3024'); lighting.addColorStop(1, '#122219');
+  ctx.fillStyle = lighting; ctx.fillRect(0, 0, 560, 820);
+  ctx.strokeStyle = '#c5d4a5'; ctx.lineWidth = 3; ctx.strokeRect(28, 34, 504, 730);
+  ctx.strokeStyle = '#b8d09a30'; ctx.lineWidth = 1;
+  for (let x = 50; x < 560; x += 46) { ctx.beginPath(); ctx.moveTo(x, 100); ctx.lineTo(x - 100, 760); ctx.stroke(); }
   ctx.fillStyle = '#d1dfbe'; ctx.font = '600 16px Arial';
   ctx.fillText('LEGENDS FIELD', 54, 80); ctx.textAlign = 'right'; ctx.fillText('DEMO / ' + (sport === 'Football' ? 'FB' : 'CR'), 506, 80); ctx.textAlign = 'left';
   if (back) {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-export default function ImageUpload({ value, onChange, onStatusChange }) {
+export default function ImageUpload({ value, onChange, onStatusChange, id = "team-logo", label = "Team logo" }) {
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
   const version = useRef(0);
@@ -31,13 +31,15 @@ export default function ImageUpload({ value, onChange, onStatusChange }) {
         canvas.height = Math.max(1, Math.round(image.height * scale));
         const context = canvas.getContext('2d');
         if (!context) { fail(); return; }
-        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        onChange(canvas.toDataURL('image/png'));
-        status(false);
+        try {
+          context.drawImage(image, 0, 0, canvas.width, canvas.height);
+          onChange(canvas.toDataURL('image/png'));
+          status(false);
+        } catch { fail(); }
       };
       image.src = reader.result;
     };
-    reader.readAsDataURL(file);
+    try { reader.readAsDataURL(file); } catch { fail(); }
   }
-  return <div className="team-logo-upload"><div className="upload-preview">{value ? <img src={value} alt="Selected demo team logo preview" /> : <span aria-hidden="true">LF</span>}</div><div><label htmlFor="team-logo">Team logo <span className="helper">(optional)</span></label><input id="team-logo" ref={input} type="file" accept="image/jpeg,image/png,image/webp" onChange={upload} aria-invalid={Boolean(error)} aria-describedby="team-logo-help team-logo-status" /><p className="helper" id="team-logo-help">JPG, PNG, or WebP · Up to 2 MB. A monogram is used if you skip this.</p>{(value || error || pending) && <button type="button" className="text-button" onClick={reset}>Remove image</button>}<p id="team-logo-status" className={error ? 'field-error' : 'helper'} role="status">{pending ? 'Preparing image…' : error}</p></div></div>;
+  return <div className="team-logo-upload"><div className="upload-preview">{value ? <img src={value} alt={`Selected ${label.toLowerCase()} preview`} /> : <span aria-hidden="true">LF</span>}</div><div><label htmlFor={id}>{label} <span className="helper">(optional)</span></label><input id={id} ref={input} type="file" accept="image/jpeg,image/png,image/webp" onChange={upload} aria-invalid={Boolean(error)} aria-describedby={`${id}-help ${id}-status`} /><p className="helper" id={`${id}-help`}>JPG, PNG, or WebP · Up to 2 MB. A default image is used if you skip this.</p>{(value || error || pending) && <button type="button" className="text-button" onClick={reset}>Remove image</button>}<p id={`${id}-status`} className={error ? 'field-error' : 'helper'} role="status">{pending ? 'Preparing image…' : error}</p></div></div>;
 }

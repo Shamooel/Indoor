@@ -1,7 +1,7 @@
 // Illustrative availability only. These times do not represent venue hours.
 export const demoSlots = ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '18:00', '19:00'];
-export function localDate(offset = 0) {
-  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Karachi', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date());
+export function localDate(offset = 0, now = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Karachi', year: 'numeric', month: '2-digit', day: '2-digit' }).formatToParts(new Date(now));
   const value = name => parts.find(part => part.type === name).value;
   const date = new Date(Date.UTC(Number(value('year')), Number(value('month')) - 1, Number(value('day')) + offset));
   return date.toISOString().slice(0, 10);
