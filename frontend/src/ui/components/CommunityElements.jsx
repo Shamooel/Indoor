@@ -4,7 +4,8 @@ import { matchResult, scoreFor } from '../data/matches';
 import { useCommunity } from '../state/CommunityStore';
 
 export function TeamLogo({ team, large = false }) {
-  return team.logo ? <img className={`team-logo ${large ? 'large' : ''}`} src={team.logo} alt={`${team.name} demo logo`} /> : <span className={`team-logo monogram ${large ? 'large' : ''}`} aria-label={`${team.name} demo monogram`}>{initials(team.name)}</span>;
+  const [failedLogo,setFailedLogo] = useState(null);
+  return team.logo && failedLogo !== team.logo ? <img className={`team-logo ${large ? 'large' : ''}`} src={team.logo} onError={() => setFailedLogo(team.logo)} alt={`${team.name} demo logo`} /> : <span className={`team-logo monogram ${large ? 'large' : ''}`} aria-label={`${team.name} demo monogram`}>{initials(team.name)}</span>;
 }
 export function SportTags({ sports }) { return <div className="sport-tags">{sports.map(sport => <span key={sport}>{sport}</span>)}</div>; }
 export function Statistics({ values }) {

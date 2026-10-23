@@ -58,3 +58,7 @@ export function standings(matches, teams, sport, period = 'all', key = monthKey(
   rows.sort((a, b) => b.points - a.points || (sport === 'Football' ? b.goalDifference - a.goalDifference || b.goalsFor - a.goalsFor : b.won - a.won) || a.team.name.localeCompare(b.team.name));
   return rows.map((row, index) => ({ ...row, position: index + 1 }));
 }
+
+export function leaderboardTeams(teams, playerId, sport) {
+  return teams.filter(team => team.sport === sport && team.members.includes(playerId));
+}

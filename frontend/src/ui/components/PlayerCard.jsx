@@ -1,9 +1,10 @@
 import React from 'react';
+import PlayerAvatar from './PlayerAvatar';
 
 export function CollectibleFace({ player, sport, teamName, back = false }) {
   return <div className={`collectible-face ${back ? 'card-back' : ''}`}>
     <div className="card-edition"><span>LEGENDS FIELD</span><span>DEMO / {sport === 'Football' ? 'FB' : 'CR'}</span></div>
-    {back ? <div className="card-back-content"><span className="card-emblem" aria-hidden="true">LF</span><h3>{player.name}</h3><p>{player.id.toUpperCase()}</p><p>{player.bio}</p><strong>{sport}</strong><span>{teamName || 'Independent demo player'}</span><small>Fictional player · No rating or verified identity</small></div> : <><div className="card-portrait"><img src={player.photo} alt={`Illustrative portrait for ${player.name}`} width="128" height="128" loading="lazy" /><span>{sport === 'Football' ? player.positions[0] : player.role}</span></div><div className="card-name"><h3>{player.name}</h3><p>{teamName || 'Independent demo player'}</p></div><div className="card-identity"><span>{sport}</span><span>{player.id.toUpperCase()}</span></div></>}
+    {back ? <div className="card-back-content"><span className="card-emblem" aria-hidden="true">LF</span><h3>{player.name}</h3><p>{player.id.toUpperCase()}</p><p>{player.bio}</p><strong>{sport}</strong><span>{teamName || 'Independent demo player'}</span><small>Fictional player · No rating or verified identity</small></div> : <><div className="card-portrait"><PlayerAvatar player={player} size={128}/><span>{sport === 'Football' ? player.positions[0] : player.role}</span></div><div className="card-name"><h3>{player.name}</h3><p>{teamName || 'Independent demo player'}</p></div><div className="card-identity"><span>{sport}</span><span>{player.id.toUpperCase()}</span></div></>}
   </div>;
 }
 

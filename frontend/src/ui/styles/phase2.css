@@ -87,4 +87,9 @@ dd { text-align: right; overflow-wrap: anywhere; }
   .review-details > div { flex-direction: column; gap: 5px; }
   .review-details dd { text-align: left; }
 }
+
+.form-field input[type=date], .form-field input[type=time], .form-field select { min-width:0; }
+.form-actions { flex-wrap:wrap; }
+@media(max-width:430px) { .choice-grid { grid-template-columns:1fr; } }
+
 }

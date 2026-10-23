@@ -20,4 +20,8 @@
 @media (max-width: 700px) {
   .site-header .navigation { top: 80px; padding-inline: 20px; max-height: calc(100dvh - 80px); }
 }
+
+.community-nav-panel { z-index:20; }
+@media(max-width:1280px) { .site-header .navigation { overscroll-behavior:contain; } }
+
 }

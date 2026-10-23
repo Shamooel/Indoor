@@ -247,4 +247,17 @@
   .competition-page *, .competition-page *::before, .competition-page *::after { animation: none !important; transition: none !important; }
   .animate-distribution .distribution-track > span { transform: none; }
 }
+
+.captain-inbox > *, .head-to-head-body > *, .challenge-versus > *, .rivalry-versus > * { min-width:0; }
+.conversation-preview { max-width:100%; }
+@media(max-width:430px) {
+  .challenge-card-meta { flex-wrap:wrap; }
+  .challenge-versus, .rivalry-versus { grid-template-columns:minmax(0,1fr) 24px minmax(0,1fr); gap:8px; }
+  .challenge-versus a, .challenge-versus a:last-child { flex-direction:column; align-items:center; text-align:center; }
+  .head-to-head-hero { padding:24px 16px; }
+  .broadcast-versus { gap:12px; grid-template-columns:minmax(0,1fr) 54px minmax(0,1fr); }
+  .conversation-header, .conversation-messages, .message-composer, .related-challenges { padding-inline:16px; }
+  .message-bubble { max-width:100%; }
+}
+
 }

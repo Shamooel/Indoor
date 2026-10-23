@@ -2,7 +2,8 @@ import { footballPositions, cricketRoles } from '../data/community';
 import { validEmail } from '../data/player';
 import { localDate, slotsForDate } from '../data/booking';
 
-export const defaultPhoto = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" fill="#dfe8d5"/><circle cx="200" cy="145" r="70" fill="#58745b"/><path d="M60 400v-40a140 140 0 0 1 280 0v40" fill="#58745b"/></svg>');
+import { defaultPhoto } from '../data/identity';
+export { defaultPhoto } from '../data/identity';
 export function profileErrors(values, state, actor, creating = false) {
   const errors = {};
   if (!values.name?.trim() || values.name.trim().length > 70) errors.name = 'Enter a name of 1–70 characters.';

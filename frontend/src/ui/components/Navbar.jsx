@@ -1,3 +1,4 @@
+import PlayerAvatar from './PlayerAvatar';
 import ThemeToggle from './ThemeToggle';
 ﻿import React, { useEffect, useRef, useState } from 'react';
 import Brand from './Brand';
@@ -41,7 +42,7 @@ export default function Navbar({ path = '/' }) {
         <div className="community-nav"><button ref={communityToggle} type="button" className={`community-nav-trigger ${isCommunity ? 'is-current' : ''}`} aria-expanded={communityOpen} aria-controls="community-navigation" onClick={() => setCommunityOpen(!communityOpen)}>Explore <span aria-hidden="true">⌄</span></button>
           <div id="community-navigation" className="community-nav-panel" hidden={!communityOpen}>{communityLinks.map(([href, label]) => <a key={href} href={href} aria-current={path === href || path.startsWith(href + '/') ? 'page' : undefined}>{label}<span aria-hidden="true">↗</span></a>)}{activePlayer && <><a href="/account/profile">My Profile ↗</a><a href="/account/teams">My Teams ↗</a><a href="/account/bookings">My Bookings ↗</a><a href="/account/settings">Account Settings ↗</a><button className="text-button" onClick={() => { dispatch({ type: 'exitAccount' }); setCommunityOpen(false); setOpen(false); goTo('/account'); }}>Exit Demo Account</button></>}<ThemeToggle/></div>
         </div>
-        <a className="account-link" href="/account" aria-current={path.startsWith('/account') ? 'page' : undefined}>{activePlayer && <img className="nav-avatar" src={activePlayer.photo} alt="" />}My Account</a>
+        <a className="account-link" href="/account" aria-current={path.startsWith('/account') ? 'page' : undefined}>{activePlayer && <PlayerAvatar className="nav-avatar" player={activePlayer} size={30} alt=""/>}My Account</a>
 
       </nav>
     </div>

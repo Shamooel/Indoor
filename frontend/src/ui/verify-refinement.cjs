@@ -120,6 +120,7 @@ async function main() {
   };
   const visitor = {...state,activePlayerId:null};
   for (const name of ['Home','Players','Teams','Matches','Leaderboards','Rankings','Rivalries']) render(`pages/${name}`,{},visitor);
+  for (const metric of ['goals','assists','runs','wickets','cleanSheets','economy']) { const sport=['runs','wickets','economy'].includes(metric)?'Cricket':'Football'; const html=render('pages/Leaderboards',{search:`?sport=${sport}&metric=${metric}&period=all`},visitor); assert(html.includes('leaderboard-results')); assert(html.includes(`data-metric="${metric}"`)); }
   for (const name of ['Matches','Leaderboards','Rankings']) render(`pages/${name}`,{search:'?sport=Cricket&period=all'},visitor);
   for (const name of ['Account','Booking','CreateTeam','Challenges','Inbox','EditProfile']) render(`pages/${name}`);
   render('pages/Account',{},visitor);render('pages/Account',{initialMode:'access',search:'?next=%2Fbooking'},visitor);
@@ -197,6 +198,7 @@ async function main() {
     assert(resolveRoute(url.pathname).Page,`Broken internal route: ${href}`);
   }
   require('./verify-final.cjs')();
+  require('./verify-leaderboards.cjs')();
   const dist = path.resolve(__dirname,'../../dist');
   if (fs.existsSync(path.join(dist,'index.html'))) {
     const html = fs.readFileSync(path.join(dist,'index.html'),'utf8');
