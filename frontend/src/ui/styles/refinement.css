@@ -97,7 +97,9 @@ input:not([type=checkbox]):not([type=radio]), select { min-height:50px; }
 .mode-switch button { flex:1; padding:12px; border-radius:10px; background:transparent; }
 .mode-switch button[aria-pressed=true] { background:var(--surface); box-shadow:0 3px 8px #14251510; font-weight:700; }
 .account-header { display:flex; justify-content:space-between; gap:24px; align-items:center; margin-bottom:32px; }
-.account-layout { display:grid; grid-template-columns:minmax(0,320px) minmax(0,1fr); gap:40px; align-items:start; }
+.account-layout { display:grid; grid-template-columns:minmax(0,360px) minmax(0,1fr); column-gap:clamp(40px,6vw,88px); row-gap:40px; align-items:start; }
+.account-layout > .account-card-column { grid-column:1; grid-row:1; }
+.account-layout > .account-profile-details { grid-column:2; grid-row:1; }
 .account-sections { min-width:0; }
 .account-section { padding:28px; background:var(--surface); border-radius:20px; margin-bottom:24px; scroll-margin-top:120px; }
 .account-section h2 { font-size:28px; margin-bottom:18px; }
@@ -196,7 +198,7 @@ input:not([type=checkbox]):not([type=radio]), select { min-height:50px; }
 .card-name h3,.card-back-content h3 { overflow-wrap:anywhere; }
 @media(max-width:600px) { .football-broadcast { grid-template-columns:minmax(0,1fr) 85px minmax(0,1fr); gap:10px; } .broadcast-score > strong { font-size:36px; } .match-card { padding:22px 18px; } }
 @media(max-width:1180px) { .navigation { gap:8px; } .community-nav-panel { width:100%; } }
-@media(max-width:900px) { .access-layout,.booking-flow,.account-layout { grid-template-columns:1fr; gap:26px; } .account-layout > :is(aside,.player-card-experience) { max-width:360px; width:100%; margin-inline:auto; } .access-art { padding:28px; } .booking-flow .summary-panel { position:static; } .players-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:900px) { .access-layout,.booking-flow { grid-template-columns:1fr; gap:26px; } .account-layout { grid-template-columns:minmax(0,1fr); row-gap:34px; } .account-layout > .account-card-column,.account-layout > .account-profile-details { grid-column:1; grid-row:auto; } .account-layout > .account-card-column { max-width:440px; width:100%; margin-inline:auto; } .access-art { padding:28px; } .booking-flow .summary-panel { position:static; } .players-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .container { width:calc(100% - 32px); } .inner-page { padding-block:32px 56px; } .players-grid { grid-template-columns:1fr; max-width:380px; margin-inline:auto; } .collectible-face { min-height:450px; } .account-header { align-items:start; flex-direction:column; } .account-section { padding:22px; } .sport-choice-grid { grid-template-columns:1fr; } .sport-choice { padding:20px; } .sport-choice strong { font-size:25px; } .date-tile strong { font-size:24px; } .slot-grid { grid-template-columns:1fr; } .roster-list li { flex-wrap:wrap; } .leaderboard-podium { grid-template-columns:1fr; } .podium-player { order:initial; padding:26px; } .leaderboard-podium:has(> :nth-child(2):last-child) { grid-template-columns:1fr; } .hero-bottom { flex-wrap:wrap; gap:10px; } .hero { height:auto; min-height:700px; } .hero-content { padding-bottom:140px; } .review-details > div { flex-direction:column; gap:5px; } .review-details dd { text-align:left; } .match-card-bottom { flex-wrap:wrap; } .card-controls { flex-wrap:wrap; } .community-section-title > span { text-align:left; } .team-tile-captain { flex-wrap:wrap; } }
 @media(prefers-reduced-motion:reduce) { .team-tile:hover,.match-card:hover { transform:none; } }
 }

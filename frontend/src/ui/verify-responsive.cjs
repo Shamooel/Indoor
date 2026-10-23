@@ -31,16 +31,28 @@ if(require.main===module)(async()=>{
     await b.send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});
     for(const route of routes) {
       await b.go(route);await b.settle();
-      const result=await b.evaluate(`(()=>{const width=document.documentElement.clientWidth; const overflow=document.documentElement.scrollWidth>width+1;const bad=overflow?Array.from(document.querySelectorAll('main *,header *,footer *')).filter(e=>{const r=e.getBoundingClientRect();return r.width&&r.right>width+1&&!e.closest('.sports-table-scroll,.journey-steps')}).slice(0,6).map(e=>e.className||e.tagName):[];const scene=document.querySelector('.account-layout .card-scene-wrap'),details=document.querySelector('.account-profile-details');let overlap=false;if(scene&&details){const a=scene.getBoundingClientRect(),d=details.getBoundingClientRect();overlap=a.left<d.right&&a.right>d.left&&a.top<d.bottom&&a.bottom>d.top;}return {overflow,bad,overlap,theme:document.documentElement.dataset.theme};})()`);
+      const result=await b.evaluate(`(()=>{const width=document.documentElement.clientWidth; const overflow=document.documentElement.scrollWidth>width+1;const bad=overflow?Array.from(document.querySelectorAll('main *,header *,footer *')).filter(e=>{const r=e.getBoundingClientRect();return r.width&&r.right>width+1&&!e.closest('.sports-table-scroll,.journey-steps')}).slice(0,6).map(e=>e.className||e.tagName):[];return {overflow,bad,theme:document.documentElement.dataset.theme};})()`);
       checked++;
-      if(result.overflow||result.overlap||result.theme!==theme)failures.push({route,width,theme,...result});
+      if(result.overflow||result.theme!==theme)failures.push({route,width,theme,...result});
     }
     console.log(`Checked ${theme} ${width}px (${routes.length} routes; ${failures.length} issues so far)`);
    }
  }
  const shotDir=require('node:path').join(require('node:os').tmpdir(),'legends-ui-polish-shots');fs.mkdirSync(shotDir,{recursive:true});
- for(const width of [390,1440])for(const route of ['/account/profile','/leaderboards?period=all','/leaderboards?sport=Cricket&period=all&metric=wickets']){
-  await b.send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await b.go(route);await b.settle();const shot=await b.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true});fs.writeFileSync(require('node:path').join(shotDir,`${width}-${route.includes('profile')?'profile':route.includes('Cricket')?'wickets':'goals'}.png`),Buffer.from(shot.data,'base64'));
+ const profileWidths=[320,375,390,430,768,1024,1280,1440,1920];
+ const profileTargets=['.account-layout','.account-card-column','.player-card-experience','.card-scene-wrap','.static-collectible','.account-profile-details','#profile-player-name','#profile-player-id','#profile-player-email','#profile-player-position','.account-profile-details .button'];
+ for(const theme of ['light','dark'])for(const width of profileWidths){
+  await b.go('/account/settings');await b.evaluate(`var profileTheme=document.querySelector('main .theme-toggle');profileTheme.value=${JSON.stringify(theme)};profileTheme.dispatchEvent(new Event('change',{bubbles:true}));`);
+  await b.send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await b.go('/account/profile');
+  const result=await b.evaluate(`(()=>{const viewport=document.documentElement.clientWidth;const rect=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height}};const targets=${JSON.stringify(profileTargets)};const boxes=Object.fromEntries(targets.map(s=>[s,rect(s)]));const frame=boxes['.card-scene-wrap'],art=boxes['.static-collectible'],info=boxes['.account-profile-details'],column=boxes['.account-card-column'],card=boxes['.player-card-experience'];const elements=targets.slice(6);const intersects=(a,c)=>a&&c&&a.left<c.right&&a.right>c.left&&a.top<c.bottom&&a.bottom>c.top;const overlaps=elements.filter(s=>intersects(boxes[s],frame)||intersects(boxes[s],art));const frameInColumn=column&&frame&&frame.left>=column.left-1&&frame.right<=column.right+1;const cardInColumn=column&&card&&card.left>=column.left-1&&card.right<=column.right+1;const artworkInFrame=frame&&art&&art.left>=frame.left-1&&art.right<=frame.right+1&&art.top>=frame.top-1&&art.bottom<=frame.bottom+1;const separation=info&&column&&(viewport<=900?info.top-column.bottom:info.left-column.right);return {width:viewport,scrollWidth:document.documentElement.scrollWidth,theme:document.documentElement.dataset.theme,boxes,overlaps,frameInColumn,cardInColumn,artworkInFrame,separation,requiredSeparation:viewport<=900?24:32};})()`);
+  const failed=result.scrollWidth>result.width+1||result.theme!==theme||!result.frameInColumn||!result.cardInColumn||!result.artworkInFrame||result.separation<result.requiredSeparation||result.overlaps.length||profileTargets.some(s=>!result.boxes[s]);
+  if(failed)failures.push({route:'/account/profile',width,theme,profile:result});
+  checked++;
+  if([390,1024,1440].includes(width)){const shot=await b.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true});fs.writeFileSync(require('node:path').join(shotDir,`${width}-profile-${theme}.png`),Buffer.from(shot.data,'base64'));}
+  console.log(`Profile geometry ${theme} ${width}px: ${failed?'FAIL':'PASS'}`);
+ }
+ for(const width of [390,1440])for(const route of ['/leaderboards?period=all','/leaderboards?sport=Cricket&period=all&metric=wickets']){
+  await b.send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});await b.go(route);await b.settle();const shot=await b.send('Page.captureScreenshot',{format:'png',captureBeyondViewport:true});fs.writeFileSync(require('node:path').join(shotDir,`${width}-${route.includes('Cricket')?'wickets':'goals'}.png`),Buffer.from(shot.data,'base64'));
  }
  console.log(JSON.stringify({checked,failures,runtimeErrors:b.errors,screenshots:shotDir},null,2));
  if(failures.length||b.errors.length)process.exitCode=1;
